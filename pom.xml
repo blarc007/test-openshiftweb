@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>test-openshiftweb</groupId>
+	<artifactId>test-openshiftweb</artifactId>
+	<version>0.0.1</version>
+	<packaging>war</packaging>
+
+	<name>test-web</name>
+
+	<dependencies>
+
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/main/webapp</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<archive>
+							<manifestEntries>
+								<Maven-Group-ID>${project.groupId}</Maven-Group-ID>
+								<Maven-Artifact-ID>${project.artifactId}</Maven-Artifact-ID>
+								<Maven-Version>${project.version}</Maven-Version>
+								<Maven-Build-Time>${maven.build.timestamp}</Maven-Build-Time>
+								<Hudson-Build-Number>${BUILD_NUMBER}</Hudson-Build-Number>
+								<SVN_REVISION>${SVN_REVISION}</SVN_REVISION>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<warName>test-web</warName>
+						<archive>
+							<manifestEntries>
+								<Maven-Group-ID>${project.groupId}</Maven-Group-ID>
+								<Maven-Artifact-ID>${project.artifactId}</Maven-Artifact-ID>
+								<Maven-Version>${project.version}</Maven-Version>
+								<Maven-Build-Time>${maven.build.timestamp}</Maven-Build-Time>
+								<Hudson-Build-Number>${BUILD_NUMBER}</Hudson-Build-Number>
+								<SVN_REVISION>${SVN_REVISION}</SVN_REVISION>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
