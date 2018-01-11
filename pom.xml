@@ -9,16 +9,22 @@
 	<name>test-web</name>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.19.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src/main/webapp</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -32,23 +38,6 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.6</version>
-					<configuration>
-						<archive>
-							<manifestEntries>
-								<Maven-Group-ID>${project.groupId}</Maven-Group-ID>
-								<Maven-Artifact-ID>${project.artifactId}</Maven-Artifact-ID>
-								<Maven-Version>${project.version}</Maven-Version>
-								<Maven-Build-Time>${maven.build.timestamp}</Maven-Build-Time>
-								<Hudson-Build-Number>${BUILD_NUMBER}</Hudson-Build-Number>
-								<SVN_REVISION>${SVN_REVISION}</SVN_REVISION>
-							</manifestEntries>
-						</archive>
-					</configuration>
-				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
