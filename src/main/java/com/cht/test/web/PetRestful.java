@@ -3,6 +3,7 @@ package com.cht.test.web;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.naming.Context;
@@ -20,13 +21,13 @@ public class PetRestful {
     @GET
     @Produces("text/plain")
     public String show() {
-        Connection result = null;
+        Connection conn = null;
         StringBuffer out = new StringBuffer();
         try {
             Context initialContext = new InitialContext();
             DataSource datasource = (DataSource)initialContext.lookup("java:jboss/datasources/MySQLDS");
-            result = datasource.getConnection();
-            Statement stmt = result.createStatement() ;
+            conn = datasource.getConnection();
+            Statement stmt = conn.createStatement() ;
             String query = "select * from pet;" ;
             ResultSet rs = stmt.executeQuery(query) ;
             while (rs.next()) {
@@ -34,6 +35,14 @@ public class PetRestful {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         
         return out.toString();
@@ -44,16 +53,29 @@ public class PetRestful {
     @Produces("text/plain")
     public String add(@PathParam("name") String name) {
         System.out.println("add pet name:" + name);
-        Connection result = null;
+        Connection conn = null;
         try {
             Context initialContext = new InitialContext();
             DataSource datasource = (DataSource)initialContext.lookup("java:jboss/datasources/MySQLDS");
-            result = datasource.getConnection();
-            String sql = "INSERT INTO test.pet ( name, owner, species, sex, birth, death ) VALUES (?,null,null,null,null,null);";
-            PreparedStatement stmt = result.prepareStatement(sql);
-            stmt.setString(1, name);
+            conn = datasource.getConnection();
             
-            int count = stmt.executeUpdate();
+            Statement stmt = conn.createStatement() ;
+            String query = "select count(*) from pet;" ;
+            ResultSet rs = stmt.executeQuery(query) ;
+            int total = 0;
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+            
+            if (total > 10) {
+                return "add fail! db full.";
+            }
+            
+            String sql = "INSERT INTO test.pet ( name, owner, species, sex, birth, death ) VALUES (?,null,null,null,null,null);";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            
+            int count = pstmt.executeUpdate();
             if (count == 1) {
                 return "add pet name:" + name;
             } else {
@@ -62,6 +84,14 @@ public class PetRestful {
         } catch (Exception e) {
             e.printStackTrace();
             return "add fail!";
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     
@@ -70,13 +100,13 @@ public class PetRestful {
     @Produces("text/plain")
     public String del(@PathParam("name") String name) {
         System.out.println("del pet name:" + name);
-        Connection result = null;
+        Connection conn = null;
         try {
             Context initialContext = new InitialContext();
             DataSource datasource = (DataSource)initialContext.lookup("java:jboss/datasources/MySQLDS");
-            result = datasource.getConnection();
+            conn = datasource.getConnection();
             String sql = "delete from test.pet where name=?;";
-            PreparedStatement stmt = result.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             
             int count = stmt.executeUpdate();
@@ -88,6 +118,14 @@ public class PetRestful {
         } catch (Exception e) {
             e.printStackTrace();
             return "del fail!";
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
