@@ -148,7 +148,7 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/MySQLDS" enabled="${mysql.enabled}" use-java-context="true" pool-name="MySQLDS" use-ccm="true">
+                <datasource jndi-name="java:jboss/datasources/MySQLDS" enabled="true" use-java-context="true" pool-name="MySQLDS" use-ccm="true">
                     <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/test</connection-url>
                     <driver>mysql</driver>
                     <security>
