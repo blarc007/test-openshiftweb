@@ -149,7 +149,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/MySQLDS" enabled="true" use-java-context="true" pool-name="MySQLDS" use-ccm="true">
-                    <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/test</connection-url>
+                    <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/test?useSSL=false</connection-url>
                     <driver>mysql</driver>
                     <security>
                       <user-name>testuser</user-name>
