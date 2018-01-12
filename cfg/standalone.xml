@@ -149,11 +149,11 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/MySQLDS" enabled="${mysql.enabled}" use-java-context="true" pool-name="MySQLDS" use-ccm="true">
-                    <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_SERVICE_HOST}:${env.OPENSHIFT_MYSQL_SERVICE_PORT}/${env.OPENSHIFT_MYSQL_DATABASE2}</connection-url>
+                    <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/test</connection-url>
                     <driver>mysql</driver>
                     <security>
-                      <user-name>${env.OPENSHIFT_MYSQL_USER2}</user-name>
-                      <password>${env.OPENSHIFT_MYSQL_PASSWORD2}</password>
+                      <user-name>testuser</user-name>
+                      <password>sqlpw</password>
                     </security>
                     <validation>
                         <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
